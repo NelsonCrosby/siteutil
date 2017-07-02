@@ -1,0 +1,14 @@
+localhost:2015
+
+log stdout
+
+startup gunicorn backend:app &
+root static
+
+rewrite {
+    to {path} {path}/ /.backend/{path}
+}
+
+proxy /.backend localhost:8000 {
+    without /.backend
+}
